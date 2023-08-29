@@ -1,0 +1,20 @@
+{
+    "name": "devchithu/filter-sorting-searchable",
+    "description": "filter-sorting-searchable",
+    "type": "package",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Devchithu\\FilterSortingSearchable\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chithresu ganesan"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0"
+    }
+}

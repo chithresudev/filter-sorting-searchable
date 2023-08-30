@@ -16,5 +16,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0"
-    }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --tag={tagNameHere}--force"
+         ]
+       }
+
 }

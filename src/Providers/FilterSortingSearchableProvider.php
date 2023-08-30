@@ -15,8 +15,9 @@ class FilterSortingSearchableProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../../public/filter-sorting-searchable.js' => public_path('filter-sorting-searchable.js'),
+            __DIR__.'/../../public/' => public_path('/'),
         ], 'filter-sorting-searchable');
+
         
         $this->publishes([
             __DIR__.'/../../src/CustomFilter/CustomFilterTrait.php' => app_path('CustomFilter/CustomFilterTrait.php'),

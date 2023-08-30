@@ -27,7 +27,7 @@ Class Filter
 
         $createPopOver = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name)) . '
 
-        <img src=' . asset('vendor/devchithu/filter-sorting-searchable/public/images/filter-icon.png') .'
+        <img src=' . asset('filter-icon.png') .'
         alt="Sq1cloud" type="button" data-pop-over="' . ($field_name) . 'PopOver" class="me-4" style="max-height:12px;">
 
         <div hidden>

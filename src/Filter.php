@@ -65,18 +65,19 @@ Class Filter
         {
 
             $param = app('request')->$field_name;
+            $checkParams = explode(',', $param);
 
             foreach ($filter_multiple_options as $key => $multiple_option) {
 
                 if($type == 'select') {
                     $append_option .= '
 
-                    <option "' . ($param == $multiple_option) ? 'selected' : '' .'" value="' . $multiple_option. '">'. ucfirst($multiple_option) . '</option>'
+                    <option ' . (($param == $multiple_option) ? 'selected' : '') . ' value="' . $multiple_option. '">'. ucfirst($multiple_option) . '</option>'
                     ;
                 }
 
                 else if($type == 'checkbox') {
-                    $checkParams = explode(',', $param);
+                    
                     $filterOptions .= '
                     <div class="form-check">
                         <input class="form-check-input" name="' . $field_name . '"  type="checkbox"

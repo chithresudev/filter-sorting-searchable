@@ -44,9 +44,7 @@ Class Filter
             $createPopOver .= self::filter($field_name, $type, $filter_multiple_options, $date_range, $custom_design);
          }
 
-         $createPopOver .= '</div></ul></div>
-
-        ';
+            $createPopOver .= '</div></ul></div>';
 
          echo $createPopOver;
 
@@ -170,11 +168,11 @@ Class Filter
         <div class="row pt-3">
             <div class="col-md-6">
                 <button
-                    class="btn btn-sm btn-block col-12 custom-button-cancel text-white ">Cancel</button>
+                    class="btn btn-sm btn-block col-12 text-white" style="background-color: #747474">Cancel</button>
             </div>
             <div class="col-md-6">
                 <button
-                    class="btn btn-sm btn-block col-12  custom-button-filter  text-white">Apply
+                    class="btn btn-sm btn-block col-12 text-white" style="background-color: #687ff5">Apply
                     Filter</button>
             </div>
             </div>

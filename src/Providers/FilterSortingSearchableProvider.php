@@ -22,6 +22,10 @@ class FilterSortingSearchableProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../src/CustomFilter/CustomFilterTrait.php' => app_path('CustomFilter/CustomFilterTrait.php'),
         ], 'customFilterTrait');
+
+        
+        $this->loadViewsFrom(__DIR__.'/../../public/filter-sorting-searchable.js', 'filter-sorting-searchable.js');
+
         
 
         Blade::directive('filterSort', function ($input_array) {

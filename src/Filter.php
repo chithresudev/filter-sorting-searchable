@@ -25,10 +25,10 @@ Class Filter
         $date_range = $collection['date_range'] ?? [];
         $custom_design = $collection['custom_design'] ?? [];
 
-        $createPopOver = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name)) . '
-
-        <img src=' . asset('filter-icon.png') .'
-        alt="Sq1cloud" type="button" data-pop-over="' . ($field_name) . 'PopOver" class="me-4" style="max-height:12px;">
+        $createPopOver = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name)) . 
+         '<span data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
+        '</span>&nbsp;<img src=' . asset('filter-icon.png') .' data-pop-over="' . ($field_name) . 'PopOver"
+        alt="Sq1cloud" type="button" class="me-4" style="max-height:12px;">
 
         <div hidden>
         <div id="' . ($field_name) . 'PopOverContentShow" style="min-width:227px;">
@@ -210,6 +210,17 @@ Class Filter
         </div><hr class="border-secondary mt-2"/>
     ';
 
+    }
+
+    private static function icon($field_name) {
+        $icon = '';
+        if(app('request')->sort_field == $field_name) {
+            $icon_dir = app('request')->sort_direction == 'desc' ? 'down' : 'up';
+            $icon .= ' <i class="fa-solid fa-arrow-' . $icon_dir .'"></i>';
+        }
+
+        return $icon;
+        
     }
 
         /**

@@ -25,11 +25,23 @@ Class Filter
         $date_range = $collection['date_range'] ?? [];
         $custom_design = $collection['custom_design'] ?? [];
 
+
         $createPopOver = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name)) . 
          '<span data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
-        '</span>&nbsp;<img src=' . asset('filter-icon.png') .' data-pop-over="' . ($field_name) . 'PopOver"
-        alt="Sq1cloud" type="button" class="me-4" style="max-height:12px;">
+        '</span>';
+        
+        $createPopOver .= '<span class="position-relative">
+        <img src=' . asset('filter-icon.png') .' data-pop-over="' . ($field_name) . 'PopOver"
+        alt="Sq1cloud" type="button" class="" style="max-height:12px;">';
 
+        if(app('request')->has($field_name)) {
+            $createPopOver .= '<span
+            class="position-absolute top-0 start-100 translate-middle p-1 border border-light rounded-circle" style="background:#687ff5">
+            <span class="visually-hidden">filters enabled</span>
+        </span>';
+        }
+    
+        $createPopOver .= '
         <div hidden>
         <div id="' . ($field_name) . 'PopOverContentShow" style="min-width:227px;">
          <ul class=" p-0 m-0">';
@@ -191,7 +203,7 @@ Class Filter
         $sort_direction = app('request')->sort_direction;
         $sort_field = app('request')->sort_field;
         return '
-        <div class="form-check p-2 border-hover ' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'bg-info' : '') . '">
+        <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#d9daf8;color:red' : '') . '">
         <label class="form-check-label " for="Asending" role="button">
             <i class="fa-solid fa-arrow-up me-1"></i>
             <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'asc']) . '">
@@ -199,7 +211,7 @@ Class Filter
             </a>
         </label>
         </div>
-        <div class="form-check border-hover p-2 ' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'bg-info' : '') . '">
+        <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#d9daf8;color:red' : '') . '">
             <label class="form-check-label" for="Desending" role="button">
                 <i class="fa-solid fa-arrow-down me-1"></i>
                 <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'desc']) . '">
@@ -216,7 +228,7 @@ Class Filter
         $icon = '';
         if(app('request')->sort_field == $field_name) {
             $icon_dir = app('request')->sort_direction == 'desc' ? 'down' : 'up';
-            $icon .= ' <i class="fa-solid fa-arrow-' . $icon_dir .'"></i>';
+            $icon .= ' <i class="fa-solid fa-arrow-' . $icon_dir .'" style="color:red; font-size:14px"></i>';
         }
 
         return $icon;
@@ -251,8 +263,11 @@ Class Filter
       * 
       * @return
       */
-      public static function bindingParams()
+      public static function bindingParams(...$custom_styles)
       {
+ 
+        $bindingparams = json_encode($custom_styles[0], true);
+        $bindingparams = json_decode($bindingparams, true);
  
          $appRequests = app('request')->except(['page', 'sort_direction']);
          
@@ -260,7 +275,11 @@ Class Filter
          $bingParams = '<div>';
  
          foreach ($appRequests as $field_name => $field_value) {
-             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 me-2 mb-2 ls-1 filtered-tags" data-param-field="' . $field_name . '">
+             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags ' . 
+             ($field_name == 'sort_field' ?
+             ($bindingparams['sorting_style_class'] ?? null) : ($bindingparams['filter_style_class'] ?? null)) .
+             
+             '"data-param-field="' . $field_name . '">
              <span data-pop-over="' . $field_name . 'PopOver"> ';
  
                     if($field_name == 'sort_field') {
@@ -276,7 +295,7 @@ Class Filter
              class="btn-close ms-5" onclick="filterRemove(this)"></button></div>';
          }
  
-         $bingParams .= '<button class="btn btn-secondary rounded-1" onclick="clearALLParams()">Clear All</button>';
+         $bingParams .= '<button class="btn btn-secondary rounded-4" onclick="clearALLParams()">Clear All</button>';
          $bingParams .= '</div>';
  
          echo  $bingParams;

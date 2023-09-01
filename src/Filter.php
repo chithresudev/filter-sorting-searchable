@@ -266,16 +266,16 @@ Class Filter
       public static function bindingParams(...$custom_styles)
       {
  
-        $bindingparams = json_encode($custom_styles[0], true);
+        $bindingparams = json_encode($custom_styles[0] ?? [], true);
         $bindingparams = json_decode($bindingparams, true);
  
-         $appRequests = app('request')->except(['page', 'sort_direction']);
+        $appRequests = app('request')->except(['page', 'sort_direction']);
          
          if($appRequests) {
          $bingParams = '<div>';
  
          foreach ($appRequests as $field_name => $field_value) {
-             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags ' . 
+             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags rounded-5' . 
              ($field_name == 'sort_field' ?
              ($bindingparams['sorting_style_class'] ?? null) : ($bindingparams['filter_style_class'] ?? null)) .
              

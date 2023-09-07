@@ -179,7 +179,7 @@ Class Filter
 
         $filterOptions .= '
         <div class="row pt-3">
-            <div class="col-md-6">
+            <div class="col-md-6 mb-2">
                 <button
                     class="btn btn-sm btn-block col-12 text-white" style="background-color: #747474">Cancel</button>
             </div>
@@ -203,7 +203,7 @@ Class Filter
         $sort_direction = app('request')->sort_direction;
         $sort_field = app('request')->sort_field;
         return '
-        <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#d9daf8;color:red' : '') . '">
+        <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
         <label class="form-check-label " for="Asending" role="button">
             <i class="fa-solid fa-arrow-up me-1"></i>
             <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'asc']) . '">
@@ -211,7 +211,7 @@ Class Filter
             </a>
         </label>
         </div>
-        <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#d9daf8;color:red' : '') . '">
+        <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
             <label class="form-check-label" for="Desending" role="button">
                 <i class="fa-solid fa-arrow-down me-1"></i>
                 <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'desc']) . '">
@@ -228,7 +228,7 @@ Class Filter
         $icon = '';
         if(app('request')->sort_field == $field_name) {
             $icon_dir = app('request')->sort_direction == 'desc' ? 'down' : 'up';
-            $icon .= ' <i class="fa-solid fa-arrow-' . $icon_dir .'" style="color:red; font-size:14px"></i>';
+            $icon .= ' <i class="fa-solid fa-arrow-' . $icon_dir .'" style="color:#687ff5; font-size:14px"></i>';
         }
 
         return $icon;
@@ -243,18 +243,18 @@ Class Filter
 
      public static function search() 
      {
-                 echo '
-                 <span>
-                 <form class="row g-3">
-                 <div class="col-auto">
-                 <input type="search" name="search" '. (app('request')->search ? 'value=' . app('request')->search : '') . ' class="form-control" id="searchable" placeholder="Search here...">
-                 </div>
-                 <div class="col-auto">
-                 <button type="submit" class="btn btn-primary mb-3">Search</button>
-                 </div>
-             </form>
-             </span>
-                 ';
+            echo '
+            <span>
+            <form class="row g-3">
+            <div class="col-auto">
+            <input type="search" name="search" '. (app('request')->search ? 'value=' . app('request')->search : '') . ' class="form-control" id="searchable" placeholder="Search here...">
+            </div>
+            <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+            </div>
+        </form>
+        </span>
+            ';
  
      }
      
@@ -266,16 +266,16 @@ Class Filter
       public static function bindingParams(...$custom_styles)
       {
  
-        $bindingparams = json_encode($custom_styles[0] ?? [], true);
+        $bindingparams = json_encode($custom_styles[0], true);
         $bindingparams = json_decode($bindingparams, true);
  
-        $appRequests = app('request')->except(['page', 'sort_direction']);
+         $appRequests = app('request')->except(['page', 'sort_direction']);
          
          if($appRequests) {
          $bingParams = '<div>';
  
          foreach ($appRequests as $field_name => $field_value) {
-             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags rounded-5' . 
+             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags rounded-5 ' . 
              ($field_name == 'sort_field' ?
              ($bindingparams['sorting_style_class'] ?? null) : ($bindingparams['filter_style_class'] ?? null)) .
              

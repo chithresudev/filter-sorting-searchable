@@ -22,7 +22,6 @@ Class Filter
         $label_name = $collection['label_name'] ?? false;
         $sorting_custom_label = $collection['sorting_custom_label'] ?? [];
         $filter_multiple_options = $collection['multiple_option'] ?? [];
-        $date_range = $collection['date_range'] ?? [];
         $custom_design = $collection['custom_design'] ?? [];
 
 
@@ -53,7 +52,7 @@ Class Filter
 
          if($filter)
          {
-            $createPopOver .= self::filter($field_name, $type, $filter_multiple_options, $date_range, $custom_design);
+            $createPopOver .= self::filter($field_name, $type, $filter_multiple_options, $custom_design);
          }
 
             $createPopOver .= '</div></ul></div>';
@@ -68,7 +67,7 @@ Class Filter
      * @return
      */
 
-     private static function filter($field_name, $type, $filter_multiple_options, $date_range, $custom_design) {
+     private static function filter($field_name, $type, $filter_multiple_options, $custom_design) {
 
         $filterOptions = '';
         $append_option = '';
@@ -128,7 +127,7 @@ Class Filter
 
         else {
             
-            if($type != 'no') {
+           
             $filterOptions .=  '
             <div class="rounded">
             <div class="custom-search-button d-flex ">
@@ -141,41 +140,11 @@ Class Filter
             </div>
         </div>
         ';
-        }
     }
-
-        if(count($date_range)) {
-        
-            $start = $date_range[0];
-            $end = $date_range[1];
-    
-            $filterOptions .= '
-    
-            <div>
-                <div class="row mt-3">
-                <div class="col-md-6">
-                <label class="small">Start Date</label>
-                    <input type="date" name="start_date"
-                        value="' . $start . '" class=" date-from-input border-hover-input form-control p-1"
-                        />
-            </div>
-    
-            <div class="col-md-6">
-            <label class="small">End Date</label>
-                    <input type="date" name="end_date" value=" ' . $end . '"
-                        class="date-from-input border-hover-input form-control p-1"
-                        />
-            </div>
-            </div>
-            </div>';
-        
-        }
-
 
         if($custom_design) {
             $filterOptions .= self::customDesign($custom_design);
         }
-
 
         $filterOptions .= '
         <div class="row pt-3">

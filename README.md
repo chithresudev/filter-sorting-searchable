@@ -20,7 +20,7 @@ or require in *composer.json*:
 ```json
 {
     "require": {
-        "devchithu/filter-sorting-searchable": "^1.0"
+        "devchithu/filter-sorting-searchable": "^1.1.2"
     }
 }
 ```
@@ -177,24 +177,29 @@ public function index(Request $request)
 There is a sorting similar same blade extension for you to use **@filterSort()**
 
 ```blade
- @filterSort(['filter' => true, 'field_name' => 'instance_type'])
+ @filterSort(['filter' => true, 'type' => 'text', 'field_name' => 'instance_type'])
 ```
 
 **Custom field name change filter**
 
 ```blade
-@filterSort(['filter' => true,'field_name' => 'name', 'label_name' => 'Name'])
+@filterSort(['filter' => true, 'type' => 'text',  'field_name' => 'name', 'label_name' => 'Name'])
 ```
 
-
-**Default set Date Range filter**
-
-```blade
-@filterSort(['filter' => true, 'field_name' => 'name', 'label_name' => 'Name', 'date_range' => [Carbon\Carbon::now(), Carbon\Carbon::yesterday()]])
-```
 
 **Custom design filter**
 Here, Custom design when anything you want design put the code like below,
+
+```blade
+@filterSort(['filter' => true, 'type' => 'text',  'field_name' => 'name', 'label_name' => 'Name', 'custom_design' => '
+
+<div class="text-center"><input type="text"/></div>
+
+'])
+```
+
+**Custom design only filter**
+Here, Type is not mentioned, if you want new design apply Custom design when anything you want design put the code like below,
 
 ```blade
 @filterSort(['filter' => true, 'field_name' => 'name', 'label_name' => 'Name', 'custom_design' => '
@@ -246,7 +251,7 @@ public function index(Request $request)
 Incase, If you want sort and filter sametime  using below Code, 
 
 ```blade
- @filterSort(['sotring' => true, 'filter' => true, 'field_name' => 'status_type', 'label_name' => 'Status Type '])
+ @filterSort(['sotring' => true, 'filter' => true, 'type' => 'text', 'field_name' => 'status_type', 'label_name' => 'Status Type '])
 ```
 
 **Here**,
@@ -256,13 +261,13 @@ Incase, If you want sort and filter sametime  using below Code,
 
 **UI - filter input field automatically generate**
 
-1. filter is `true` default create input box type = 'text', if you want different input type like (selelect, radio, range) below code put the array params
+1. filter is `true` create input box type = 'text', if you want different input type like (selelect, radio, range) below code put the array params
    `'type' => 'text' // 'type' => 'select' or  radio, range`
 
 Here, if you `select ` option using  multiple option value data like `'multiple_option' => ['All', 'active', 'in_active']
 
 ```blade
- @filterSortSearchable(['sorting' => true, 'filter' => true, 'type' => 'select', 'field_name' => 'status', 'label_name' => 'Status', 'multiple_option' => ['All', 'active', 'in_active']])
+ @filterSort(['sorting' => true, 'filter' => true, 'type' => 'select', 'field_name' => 'status', 'label_name' => 'Status', 'multiple_option' => ['All', 'active', 'in_active']])
                                
 ```
 
@@ -386,7 +391,7 @@ public function index(Request $request)
 ```
 
 
-# *customized filter 
+# *Manual customized filter 
 If you want filter some field customazed used here file
 
 ```
@@ -428,6 +433,13 @@ Which place to you want binding parameters declare the **@bindingParams()**
 ```blade
 @bindingParams()
 ```
+
+## * Binding Params apply custom style class
+What are field sorting, filterting below code
+Which desgin you want apply the class name like : 
+
+ **@bindingParams(['sorting_style_class' => 'custom-sorting', 'filter_style_class' => 'custom-filter'])**
+
 Run finally,
 ```
 php artisan op:cl

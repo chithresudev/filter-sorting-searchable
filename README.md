@@ -438,7 +438,9 @@ Which place to you want binding parameters declare the **@bindingParams()**
 What are field sorting, filterting below code
 Which desgin you want apply the class name like : 
 
- **@bindingParams(['sorting_style_class' => 'custom-sorting', 'filter_style_class' => 'custom-filter'])**
+```blade
+@bindingParams(['sorting_style_class' => 'custom-sorting', 'filter_style_class' => 'custom-filter'])**
+```
 
 Run finally,
 ```

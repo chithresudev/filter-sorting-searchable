@@ -45,6 +45,12 @@ class FilterSortingSearchableProvider extends ServiceProvider
             return "<?php Devchithu\FilterSortingSearchable\Filter::bindingParams({$input_params}) ?>";
     
             });
+
+        Blade::directive('tableColumnSwitcher', function () {
+
+            return "<?php Devchithu\FilterSortingSearchable\Filter::tableColumnSwitcher() ?>";
+    
+            });
             
         }
 }

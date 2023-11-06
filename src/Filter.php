@@ -23,15 +23,18 @@ Class Filter
         $sorting_custom_label = $collection['sorting_custom_label'] ?? [];
         $filter_multiple_options = $collection['multiple_option'] ?? [];
         $custom_design = $collection['custom_design'] ?? [];
+        $table_column_switcher = $collection['table_column_switcher'] ?? '';
 
-
-        $createPopOver = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name)) . 
-         '<span data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
+        $field_label_generate = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name));
+        $createPopOver = $field_label_generate . 
+         '<span data-table-column-switcher=" ' .$table_column_switcher. '#' . $field_label_generate .'" data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
         '</span>';
         
         $createPopOver .= '<span class="position-relative">
-        <img src=' . asset('filter-icon.png') .' data-pop-over="' . ($field_name) . 'PopOver"
-        alt="Sq1cloud" type="button" class="" style="max-height:12px;">';
+        <svg width="20" role="button" height="20" data-pop-over="' . ($field_name) . 'PopOver" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.16669 3.33331H15.8334C16.0635 3.33331 16.25 3.51986 16.25 3.74998C16.25 3.84013 16.2208 3.92786 16.1667 3.99998L11.6667 9.99998V16.8258C11.6667 17.0559 11.4801 17.2425 11.25 17.2425C11.1853 17.2425 11.1215 17.2274 11.0637 17.1985L8.33336 15.8333V9.99998L3.83336 3.99998C3.69529 3.81588 3.7326 3.55472 3.91669 3.41665C3.98881 3.36255 4.07654 3.33331 4.16669 3.33331Z" fill="white"></path>
+        </svg>
+        </span>';
 
         if(app('request')->has($field_name)) {
             $createPopOver .= '<span
@@ -173,7 +176,7 @@ Class Filter
         $sort_field = app('request')->sort_field;
         return '
         <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
-        <label class="form-check-label " for="Asending" role="button">
+        <label class="form-check-label font-14 " for="Asending" role="button">
             <i class="fa-solid fa-arrow-up me-1"></i>
             <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'asc']) . '">
             ' . ($sorting_custom_label[0] ?? false ? $sorting_custom_label[0] : 'Sort Ascending') . '
@@ -181,7 +184,7 @@ Class Filter
         </label>
         </div>
         <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
-            <label class="form-check-label" for="Desending" role="button">
+            <label class="form-check-label font-14"  for="Desending" role="button">
                 <i class="fa-solid fa-arrow-down me-1"></i>
                 <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'desc']) . '">
                 ' . (($sorting_custom_label[1] ?? false ? $sorting_custom_label[1] : ' Sort Desending')) . '
@@ -269,6 +272,39 @@ Class Filter
  
          echo  $bingParams;
      }            
-    
     }
+
+         
+     /**
+      * Static public function dynamic table column hidden template
+      * 
+      * @return
+      */
+      public static function tableColumnSwitcher()
+      {
+
+            $design = '
+            <div class="dropdown ms-3">
+                <button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                            <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                            <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                        </g>
+                    </svg>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <div id="listColumnSwitcher" class="switches p-3 text-nowrap">
+                   
+                    </div>
+                    <hr>
+                    <p role="button" style="text-align:center" onClick="myClearAll()"> Clear All
+                    </p>
+              
+                </div>
+            </div>';
+          echo $design;
+      }
 }

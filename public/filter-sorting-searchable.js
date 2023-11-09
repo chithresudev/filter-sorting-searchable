@@ -1,6 +1,3 @@
-/*---------------------------------------------------
---------Filter and sorting --------*/
-
 const popOvers = document.querySelectorAll("[data-pop-over]");
 popOvers.forEach((popOver) => {
   const showPopOver = document.getElementById(
@@ -78,29 +75,53 @@ function filterRemove(removeElementParam) {
 /*---------------------------------------------------
 --------Table Column Switcher hide and show --------*/
 
-let tableColumnSwitchers = document.querySelectorAll(
-  "[data-table-column-switcher]"
+let listColumnSwitcherAppend = document.querySelectorAll(
+  "[id^=listColumnSwitcher_]"
 );
-let listColumnSwitcher = document.getElementById("listColumnSwitcher");
+let listColumnSwitchers = document.querySelectorAll("table");
+listColumnSwitchers.forEach((listColumnSwitcher, index) => {
+  const table = listColumnSwitcher.querySelector("tr");
+  const appendId = listColumnSwitcherAppend[index];
 
-tableColumnSwitchers.forEach((tableColumnSwitcher, index) => {
-  let [condition, fieldName] =
-    tableColumnSwitcher.dataset.tableColumnSwitcher.split("#");
-  if (condition == true) {
-    checkedBoxValue = localStorage.getItem(`defaultCheck${fieldName}`);
-    let listColumnContent = `<div class="form-check">
-    <input class="form-check-input" type="checkbox" ${checkedBoxValue}  id="defaultCheck${fieldName}">
-        <label class="form-check-label" for="defaultCheck${fieldName}">${fieldName}
-        </label>
-    </div>`;
-
-    listColumnSwitcher.insertAdjacentHTML("beforeend", listColumnContent);
-    let tableColumnSwitchersAction = document.getElementById(
-      `defaultCheck${fieldName}`
+  table.querySelectorAll("th").forEach((tableThColumn) => {
+    const defaultValueData = tableThColumn.querySelector(
+      "[data-table-column-switcher]"
     );
+    const defaultValue = defaultValueData?.dataset?.tableColumnSwitcher;
+    const labelName = tableThColumn.innerText;
+    const labelId = labelName.replaceAll(" ", "_");
+
+    if (localStorage.getItem(`checkBoxTableId_${index}${labelId}`) == null) {
+      checkedBoxValue =
+        defaultValue == "default"
+          ? "disabled checked"
+          : defaultValue == true
+          ? "checked"
+          : "";
+    } else {
+      checkedBoxValue = localStorage.getItem(
+        `checkBoxTableId_${index}${labelId}`
+      );
+    }
+
+    let listColumnContent = `<div class="form-check">
+        <input class="form-check-input" type="checkbox" ${checkedBoxValue} id="checkBoxTableId_${index}${labelId}">
+            <label class="form-check-label" for="checkBoxTableId_${index}${labelId}">${labelName}
+            </label>
+        </div>`;
+
+    appendId.insertAdjacentHTML("beforeend", listColumnContent);
+
+    let tableColumnSwitchersAction = document.getElementById(
+      `checkBoxTableId_${index}${labelId}`
+    );
+    cellIndex = tableThColumn.cellIndex + 1;
 
     if (tableColumnSwitchersAction.checked) {
-      cellIndex = tableColumnSwitcher.parentElement.cellIndex + 1;
+      $(
+        "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+      ).show();
+    } else {
       $(
         "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
       ).hide();
@@ -109,21 +130,21 @@ tableColumnSwitchers.forEach((tableColumnSwitcher, index) => {
     tableColumnSwitchersAction.addEventListener(
       "change",
       (tableColumnSwitchersActionValue) => {
-        cellIndex = tableColumnSwitcher.parentElement.cellIndex + 1;
+        cellIndex = tableThColumn.cellIndex + 1;
         if (tableColumnSwitchersActionValue.target.checked == true) {
-          localStorage.setItem(`defaultCheck${fieldName}`, "checked");
-          $(
-            "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
-          ).hide();
-        } else {
-          localStorage.setItem(`defaultCheck${fieldName}`, null);
+          localStorage.setItem(`checkBoxTableId_${index}${labelId}`, "checked");
           $(
             "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
           ).show();
+        } else {
+          localStorage.setItem(`checkBoxTableId_${index}${labelId}`, null);
+          $(
+            "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+          ).hide();
         }
       }
     );
-  }
+  });
 });
 
 /* Crear all data */

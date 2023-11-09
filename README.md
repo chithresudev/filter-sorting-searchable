@@ -3,7 +3,7 @@
 [![Latest Stable Version](http://poser.pugx.org/devchithu/filter-sorting-searchable/v)](https://packagist.org/packages/devchithu/filter-sorting-searchable) [![Total Downloads](http://poser.pugx.org/devchithu/filter-sorting-searchable/downloads)](https://packagist.org/packages/devchithu/filter-sorting-searchable) [![Latest Unstable Version](http://poser.pugx.org/devchithu/filter-sorting-searchable/v/unstable)](https://packagist.org/packages/devchithu/filter-sorting-searchable) [![License](http://poser.pugx.org/devchithu/filter-sorting-searchable/license)](https://packagist.org/packages/devchithu/filter-sorting-searchable) [![PHP Version Require](http://poser.pugx.org/devchithu/filter-sorting-searchable/require/php)](https://packagist.org/packages/devchithu/filter-sorting-searchable)
 
 
-This Package bootstrap popover for handling dynamic column sorting, filter and searchable in Laravel.
+This Package bootstrap popover for handling dynamic switching column hidden, sorting, filter and searchable in Laravel.
 
 
 ![Screenshot](public/filter_sort_searchable.gif)
@@ -20,7 +20,7 @@ or require in *composer.json*:
 ```json
 {
     "require": {
-        "devchithu/filter-sorting-searchable": "^1.1.2"
+        "devchithu/filter-sorting-searchable": "^1.1.5"
     }
 }
 ```
@@ -442,6 +442,28 @@ Which desgin you want apply the class name like :
 @bindingParams(['sorting_style_class' => 'custom-sorting', 'filter_style_class' => 'custom-filter'])
 ```
 
+## * Table Column Dynamic hidden switcher
+what are the field you want default show put here every table column menu icon '...' :
+ 
+```blade
+ @tableColumnSwitcher()
+```
+
+if you want only one field need hide: 
+
+```blade
+
+ @filterSort(['label_name' => 'id', 'table_column_switcher' => 'default'])
+```
+
+if you want also filter, sorting, searchable, table column hidden: 
+
+```blade
+@filterSort(['sorting' => true, 'filter' => true, 'field_name' => 'id', 'label_name' => 'ID', 'table_column_switcher' => 'default'])
+```
+here, two option is there. one is table_column_switcher 'default' this can't change the column. second is table_column_switcher is 'true' you can change the column.
+
+````
 Run finally,
 ```
 php artisan op:cl

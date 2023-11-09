@@ -26,13 +26,17 @@ Class Filter
         $table_column_switcher = $collection['table_column_switcher'] ?? '';
 
         $field_label_generate = ucwords($label_name ? $label_name : str_replace('_', ' ', $field_name));
-        $createPopOver = $field_label_generate . 
-         '<span data-table-column-switcher=" ' .$table_column_switcher. '#' . $field_label_generate .'" data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
+        
+        $createPopOver = $field_label_generate;
+
+        if($sorting || $filter) {
+        $createPopOver .= 
+         '<span data-pop-over="' . ($field_name) . 'PopOver">' . self::icon($field_name) . 
         '</span>';
         
         $createPopOver .= '<span class="position-relative">
         <svg width="20" role="button" height="20" data-pop-over="' . ($field_name) . 'PopOver" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.16669 3.33331H15.8334C16.0635 3.33331 16.25 3.51986 16.25 3.74998C16.25 3.84013 16.2208 3.92786 16.1667 3.99998L11.6667 9.99998V16.8258C11.6667 17.0559 11.4801 17.2425 11.25 17.2425C11.1853 17.2425 11.1215 17.2274 11.0637 17.1985L8.33336 15.8333V9.99998L3.83336 3.99998C3.69529 3.81588 3.7326 3.55472 3.91669 3.41665C3.98881 3.36255 4.07654 3.33331 4.16669 3.33331Z" fill="white"></path>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.16669 3.33331H15.8334C16.0635 3.33331 16.25 3.51986 16.25 3.74998C16.25 3.84013 16.2208 3.92786 16.1667 3.99998L11.6667 9.99998V16.8258C11.6667 17.0559 11.4801 17.2425 11.25 17.2425C11.1853 17.2425 11.1215 17.2274 11.0637 17.1985L8.33336 15.8333V9.99998L3.83336 3.99998C3.69529 3.81588 3.7326 3.55472 3.91669 3.41665C3.98881 3.36255 4.07654 3.33331 4.16669 3.33331Z" fill="black"></path>
         </svg>
         </span>';
 
@@ -59,6 +63,11 @@ Class Filter
          }
 
             $createPopOver .= '</div></ul></div>';
+        }
+
+        if($table_column_switcher) {
+            $createPopOver .= '<span data-table-column-switcher="' .$table_column_switcher. '"></span>';
+        }
 
          echo $createPopOver;
 
@@ -280,7 +289,7 @@ Class Filter
       * 
       * @return
       */
-      public static function tableColumnSwitcher()
+      public static function tableColumnSwitcher($dynamic_id = null)
       {
 
             $design = '
@@ -296,7 +305,7 @@ Class Filter
                     </svg>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <div id="listColumnSwitcher" class="switches p-3 text-nowrap">
+                    <div id="listColumnSwitcher_' . ($dynamic_id ?? NULL) . '" class="switches p-3 text-nowrap">
                    
                     </div>
                     <hr>

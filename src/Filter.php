@@ -275,10 +275,10 @@ Class Filter
                   
              $bingParams .= '</span>
              <button type="button"
-             class="btn-close ms-5" onclick="filterRemove(this)"></button></div>';
+             class="btn-close btn-close-white ms-5" onclick="filterRemove(this)"></button></div>';
          }
  
-         $bingParams .= '<button class="btn btn-secondary rounded-4" onclick="clearALLParams()">Clear All</button>';
+         $bingParams .= '<button class="btn btn-secondary btn-sm rounded-4 mb-2" onclick="clearALLParams()">Clear All</button>';
  
          echo  $bingParams;
      }            

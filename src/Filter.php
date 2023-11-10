@@ -253,7 +253,7 @@ Class Filter
          $appRequests = app('request')->except(['page', 'sort_direction']);
          
          if($appRequests) {
-         $bingParams = '<div>';
+         $bingParams = '';
  
          foreach ($appRequests as $field_name => $field_value) {
             $sortNameConvert = ($field_name == 'sort_field') ? $field_value : $field_name;
@@ -279,7 +279,6 @@ Class Filter
          }
  
          $bingParams .= '<button class="btn btn-secondary rounded-4" onclick="clearALLParams()">Clear All</button>';
-         $bingParams .= '</div>';
  
          echo  $bingParams;
      }            

@@ -25,7 +25,7 @@ document.addEventListener("click", function (e) {
   });
 });
 
-let searchParam = new URLSearchParams(window.location.search);
+var searchParam = new URLSearchParams(window.location.search);
 
 function addFilter(el) {
   var { name, value } = el.previousElementSibling;
@@ -55,6 +55,7 @@ function filterRemove(removeElementParam) {
   let queryString;
   if (typeof removeElementParam != "undefined") {
     const removeParam = removeElementParam.parentNode.dataset.paramField;
+    console.log(searchParam);
     queryString = new URLSearchParams(
       Object.fromEntries(new URLSearchParams(searchParam))
     );
@@ -75,76 +76,74 @@ function filterRemove(removeElementParam) {
 /*---------------------------------------------------
 --------Table Column Switcher hide and show --------*/
 
-let listColumnSwitcherAppend = document.querySelectorAll(
-  "[id^=listColumnSwitcher_]"
+let listColumnSwitcherAppend = document.querySelector(
+  "[id=listColumnSwitcher_]"
 );
-let listColumnSwitchers = document.querySelectorAll("table");
-listColumnSwitchers.forEach((listColumnSwitcher, index) => {
-  const table = listColumnSwitcher.querySelector("tr");
-  const appendId = listColumnSwitcherAppend[index];
+let listColumnSwitcher = document.querySelector("table").firstElementChild;
+const table = listColumnSwitcher.querySelector("tr");
+const appendId = listColumnSwitcherAppend;
+const index = 1;
+table.querySelectorAll("th").forEach((tableThColumn) => {
+  const defaultValueData = tableThColumn.querySelector(
+    "[data-table-column-switcher]"
+  );
+  const defaultValue = defaultValueData?.dataset?.tableColumnSwitcher;
+  const labelName = tableThColumn.innerText;
+  const labelId = labelName.replaceAll(" ", "_");
 
-  table.querySelectorAll("th").forEach((tableThColumn) => {
-    const defaultValueData = tableThColumn.querySelector(
-      "[data-table-column-switcher]"
+  if (localStorage.getItem(`checkBoxTableId_${index}${labelId}`) == null) {
+    checkedBoxValue =
+      defaultValue == "default"
+        ? "disabled checked"
+        : defaultValue == true
+        ? "checked"
+        : "";
+  } else {
+    checkedBoxValue = localStorage.getItem(
+      `checkBoxTableId_${index}${labelId}`
     );
-    const defaultValue = defaultValueData?.dataset?.tableColumnSwitcher;
-    const labelName = tableThColumn.innerText;
-    const labelId = labelName.replaceAll(" ", "_");
+  }
 
-    if (localStorage.getItem(`checkBoxTableId_${index}${labelId}`) == null) {
-      checkedBoxValue =
-        defaultValue == "default"
-          ? "disabled checked"
-          : defaultValue == true
-          ? "checked"
-          : "";
-    } else {
-      checkedBoxValue = localStorage.getItem(
-        `checkBoxTableId_${index}${labelId}`
-      );
-    }
-
-    let listColumnContent = `<div class="form-check">
+  let listColumnContent = `<div class="form-check">
         <input class="form-check-input" type="checkbox" ${checkedBoxValue} id="checkBoxTableId_${index}${labelId}">
             <label class="form-check-label" for="checkBoxTableId_${index}${labelId}">${labelName}
             </label>
         </div>`;
 
-    appendId.insertAdjacentHTML("beforeend", listColumnContent);
+  appendId.insertAdjacentHTML("beforeend", listColumnContent);
 
-    let tableColumnSwitchersAction = document.getElementById(
-      `checkBoxTableId_${index}${labelId}`
-    );
-    cellIndex = tableThColumn.cellIndex + 1;
+  let tableColumnSwitchersAction = document.getElementById(
+    `checkBoxTableId_${index}${labelId}`
+  );
+  cellIndex = tableThColumn.cellIndex + 1;
 
-    if (tableColumnSwitchersAction.checked) {
-      $(
-        "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
-      ).show();
-    } else {
-      $(
-        "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
-      ).hide();
-    }
+  if (tableColumnSwitchersAction.checked) {
+    $(
+      "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+    ).show();
+  } else {
+    $(
+      "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+    ).hide();
+  }
 
-    tableColumnSwitchersAction.addEventListener(
-      "change",
-      (tableColumnSwitchersActionValue) => {
-        cellIndex = tableThColumn.cellIndex + 1;
-        if (tableColumnSwitchersActionValue.target.checked == true) {
-          localStorage.setItem(`checkBoxTableId_${index}${labelId}`, "checked");
-          $(
-            "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
-          ).show();
-        } else {
-          localStorage.setItem(`checkBoxTableId_${index}${labelId}`, null);
-          $(
-            "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
-          ).hide();
-        }
+  tableColumnSwitchersAction.addEventListener(
+    "change",
+    (tableColumnSwitchersActionValue) => {
+      cellIndex = tableThColumn.cellIndex + 1;
+      if (tableColumnSwitchersActionValue.target.checked == true) {
+        localStorage.setItem(`checkBoxTableId_${index}${labelId}`, "checked");
+        $(
+          "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+        ).show();
+      } else {
+        localStorage.setItem(`checkBoxTableId_${index}${labelId}`, null);
+        $(
+          "th:nth-child(" + cellIndex + "), td:nth-child(" + cellIndex + ")"
+        ).hide();
       }
-    );
-  });
+    }
+  );
 });
 
 /* Crear all data */

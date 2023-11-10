@@ -256,12 +256,14 @@ Class Filter
          $bingParams = '<div>';
  
          foreach ($appRequests as $field_name => $field_value) {
-             $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags rounded-5 ' . 
+            $sortNameConvert = ($field_name == 'sort_field') ? $field_value : $field_name;
+
+            $bingParams .= '<div type="button" class="fw-normal d-inline-block filtered-container badge text-bg-light border shadow-sm py-2 px-3 me-2 mb-2 ls-1 filtered-tags rounded-5 ' . 
              ($field_name == 'sort_field' ?
              ($bindingparams['sorting_style_class'] ?? null) : ($bindingparams['filter_style_class'] ?? null)) .
              
-             '"data-param-field="' . $field_name . '">
-             <span data-pop-over="' . $field_name . 'PopOver"> ';
+             '"data-param-field="' . $sortNameConvert . '">
+             <span data-pop-over="' . $sortNameConvert . 'PopOver"> ';
  
                     if($field_name == 'sort_field') {
                      $bingParams .= 'Sort by '  . strtoupper(app('request')->sort_direction) . ' in ' . ucwords(str_replace('_', ' ' ,$field_value));
@@ -309,7 +311,7 @@ Class Filter
                    
                     </div>
                     <hr>
-                    <p role="button" style="text-align:center" onClick="myClearAll()"> Clear All
+                    <p role="button" style="text-align:center" onClick="myClearAll()"> Get Default
                     </p>
               
                 </div>

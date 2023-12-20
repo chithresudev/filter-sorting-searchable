@@ -250,7 +250,7 @@ Class Filter
         $bindingparams = json_encode($custom_styles[0], true);
         $bindingparams = json_decode($bindingparams, true);
  
-         $appRequests = app('request')->except(['page', 'sort_direction']);
+         $appRequests = app('request')->except(['page', 'sort_direction', 'signature', '_token', 'token']);
          
          if($appRequests) {
          $bingParams = '';

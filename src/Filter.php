@@ -42,7 +42,7 @@ Class Filter
 
         if(app('request')->has($field_name)) {
             $createPopOver .= '<span
-            class="position-absolute top-0 start-100 translate-middle p-1 border border-light rounded-circle" style="background:#687ff5">
+            class="position-absolute translate-middle p-1 border border-light rounded-circle" style="background:#687ff5">
             <span class="visually-hidden">filters enabled</span>
         </span>';
         }
@@ -184,7 +184,7 @@ Class Filter
         $sort_direction = app('request')->sort_direction;
         $sort_field = app('request')->sort_field;
         return '
-        <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
+        <div class="form-check p-2 border-hover"' . (($sort_field == $field_name) && ($sort_direction == "asc") ? 'style="background:#512db7;color:#d9daf8;border-radius:5px' : '') . '">
         <label class="form-check-label font-14 " for="Asending" role="button">
             <i class="fa-solid fa-arrow-up me-1"></i>
             <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'asc']) . '">
@@ -192,7 +192,7 @@ Class Filter
             </a>
         </label>
         </div>
-        <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#d9daf8;color:#687ff5' : '') . '">
+        <div class="form-check border-hover p-2"' . (($sort_field == $field_name) && ($sort_direction == "desc") ? 'style="background:#512db7;color:#d9daf8;border-radius:5px' : '') . '">
             <label class="form-check-label font-14"  for="Desending" role="button">
                 <i class="fa-solid fa-arrow-down me-1"></i>
                 <a href="' . app('request')->fullUrlWithQuery(['sort_field' => $field_name, 'sort_direction' => 'desc']) . '">
@@ -250,7 +250,7 @@ Class Filter
         $bindingparams = json_encode($custom_styles[0], true);
         $bindingparams = json_decode($bindingparams, true);
  
-         $appRequests = app('request')->except(['page', 'sort_direction', 'signature', '_token', 'token']);
+         $appRequests = app('request')->except(['page', 'sort_direction', 'signature']);
          
          if($appRequests) {
          $bingParams = '';
@@ -307,7 +307,7 @@ Class Filter
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <div id="listColumnSwitcher_' . ($dynamic_id ?? NULL) . '" class="switches p-3 text-nowrap">
-                   
+                    '. ($dynamic_id ? 'Column not added' : $dynamic_id).'
                     </div>
                     <hr>
                     <p role="button" style="text-align:center" onClick="myClearAll()"> Get Default
@@ -315,6 +315,7 @@ Class Filter
               
                 </div>
             </div>';
+            
           echo $design;
       }
 }

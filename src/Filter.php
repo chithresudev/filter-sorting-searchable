@@ -95,7 +95,7 @@ Class Filter
                 if($type == 'select') {
                     $append_option .= '
 
-                    <option ' . (($param == $multiple_option) ? 'selected' : '') . ' value="' . $multiple_option. '">'. ucfirst($multiple_option) . '</option>'
+                    <option ' . (($param == $multiple_option) ? 'selected' : '') . ' value="' . $multiple_option. '">'. ucwords(str_replace('_', ' ', $multiple_option)) . '</option>'
                     ;
                 }
 
@@ -107,7 +107,7 @@ Class Filter
                         ' . ((in_array($multiple_option, $checkParams)) ? 'checked' : '') . '
                         value="' . $multiple_option . '" id="dynamicCheckBox' . $key .'">
                         <label class="form-check-label" for="dynamicCheckBox' . $key .'">
-                        '. ucfirst($multiple_option) . '
+                        '. ucwords(str_replace('_', ' ', $multiple_option)) . '
                         </label>
                         </div>';
                 }
@@ -121,7 +121,7 @@ Class Filter
                         >
                     
                         <label class="form-check-label" for="dynamicRadio' . $key .'">
-                        '. ucfirst($multiple_option) . '
+                        '. ucwords(str_replace('_', ' ', $multiple_option)) . '
                     </label>
                 </div>';
                 }
@@ -143,7 +143,7 @@ Class Filter
             $filterOptions .=  '
             <div class="rounded">
             <div class="custom-search-button d-flex ">
-                <input type="' . ($type ? $type : 'text') . '" placeholder="Search by ' . ucfirst(str_replace('_', ' ', $field_name)) . '"
+                <input type="' . ($type ? $type : 'text') . '" placeholder="Search by ' . ucwords(str_replace('_', ' ', $field_name)) . '"
                     name="' . $field_name .'"
                     value="' . app('request')->$field_name . '"
                     class="form-control rounded-0  custom-search-button-2  "
@@ -216,7 +216,7 @@ Class Filter
         
     }
 
-        /**
+    /**
      * Static public function searchable template
      * 
      * @return
@@ -269,7 +269,7 @@ Class Filter
                      $bingParams .= 'Sort by '  . strtoupper(app('request')->sort_direction) . ' in ' . ucwords(str_replace('_', ' ' ,$field_value));
                      
                     }    else  {
-                     $bingParams .= ucwords(str_replace('_', ' ' ,$field_name)) . ' : ' . $field_value;
+                     $bingParams .= ucwords(str_replace('_', ' ' ,$field_name)) . ' : ' . ucwords(str_replace('_', ' ' ,$field_value));
                  
                     }
                   

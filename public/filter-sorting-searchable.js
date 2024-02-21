@@ -55,12 +55,13 @@ function filterRemove(removeElementParam) {
   let queryString;
   if (typeof removeElementParam != "undefined") {
     const removeParam = removeElementParam.parentNode.dataset.paramField;
-    console.log(searchParam);
+
     queryString = new URLSearchParams(
       Object.fromEntries(new URLSearchParams(searchParam))
     );
+
     [...queryString.entries()].forEach(() => {
-      if (searchParam.get("sort_field")) {
+      if (searchParam.get("sort_field") == removeParam) {
         queryString.delete("sort_direction");
         queryString.delete("sort_field");
       } else {
